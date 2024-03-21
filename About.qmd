@@ -1,0 +1,61 @@
+# About {orientation="rows" scrolling="false"}
+
+## About {height=30%}
+
+::: {.card title="About"}
+The CCP Global PQD Quarterly Trends Report provides an overview of the risk management provided by
+CCPs across the globe. It complements existing public statistics, such as the BIS derivatives statistics, by
+providing a summary of key indicators which provides market participants an overview of the CCP
+ecosystem. The publication underlines the scope and scale of risk mitigation provided by central clearing:
+
+  -  CCPs exposure to credit risk is collateralized through high-quality and liquid collateral;
+  -  CCPs risk-manage their clearing exposure by collecting mark-to-market losses through regular variation margin (or similar) payments.
+
+This CCP Global PQD Quarterly Trends Report helps to inform market participants, authorities, and the
+general public of key features, the scale and nature of financial market infrastructure risk management.
+The data is aggregated directly from the CCPs themselves according to the CCP Global standardized
+template, carrying information stipulated in global regulatory guidance. Further details for individual
+CCPs can be found in links provided on the [CCP Global website](https://ccp-global.org) and page 23 of this report.
+:::
+
+## Disclaimer {height=20%}
+
+::: {.card title="Disclaimer"}
+The information and analysis detailed throughout this PQD QTR are for general information 
+purposes only. While we attempt to keep the information up-to-date and accurate, there are no 
+representations or warranties, expressed or implied, about the completeness, accuracy, 
+reliability, suitability or availability with respect to the information, or related graphics 
+contained in this report. This PQD QTR may not be reproduced or redistributed, in whole or in 
+part, without the written permission of CCP Global. The information contained herein does not 
+substitute as investment advice and should not be relied upon for such purposes. CCP Global 
+accepts no liability for any loss arising from any action taken as a result of any information 
+within this report.
+:::
+
+## Etc {height=50%}
+
+```{r}
+htmlOutput("frame_test")
+```
+
+```{r}
+#| context: server
+output$frame_test <- renderUI({
+  src="https://ccp-global.org/ccpg-pqd-dashboard/?fullscreen=1"  
+  height = "900"
+  toolbar="hidden" 
+  unrestrictedembedding="true"
+  style ="height: 100vh;"
+  token="eyJraWQiOiJlYTlkYjQwMi1mZjA5LTQyMmYtYTAwMS00MmExZTQ3ZTA0NjAiLCJpc3MiOiIxNGRhNTE3Y
+i0xNzRiLTQxNDAtYjBhOS1mZTI1MmNlNGFmNDgiLCJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
+eyJpc3MiOiIxNGRhNTE3Yi0xNzRiLTQxNDAtYjBhOS1mZTI1MmNlNGFmNDgiLCJleHAiOjE3MTA4Mjc4MzUsImp0
+aSI6ImRmMzUyMzNlLWQwMDgtNDQ2NS04YzE0LWMwMzc4MGYwZTFlNSIsImF1ZCI6InRhYmxlYXUiLCJzdWIiOiJy
+aXNoaS5uYWdhckBjY3AxMi5vcmciLCJzY3AiOlsidGFibGVhdTp2aWV3czplbWJlZCIsInRhYmxlYXU6bWV0cmlj
+czplbWJlZCJdfQ.4dgPEFom1O0lT7mt16k1UbzIl5hSFJ4qF7alJlfPreI" 
+  ui_lnk <- tags$iframe(src = src,  scrolling="no", toolbar = toolbar, unrestrictedembedding = unrestrictedembedding, style = style, token = token)
+  ui_lnk
+})
+```
+
+
+

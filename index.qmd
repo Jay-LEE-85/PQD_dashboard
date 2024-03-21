@@ -1,0 +1,59 @@
+---
+title: "PQD ClearSight"
+author: "by CCPG"
+format: 
+  dashboard:
+    nav-buttons:
+      - icon: house
+        href: https://ccp-global.org
+      - icon: linkedin
+        href: https://nl.linkedin.com/company/ccp-global-12
+    logo: images/logo_ccpg.png
+    theme: 
+      - yeti
+      - style/style.css
+    mermaid-format: svg
+server: shiny
+---
+
+<!-- setup-->
+
+```{r}
+#| context: setup
+#| echo: false
+
+# lubrary list 
+library(shiny)
+library(bslib) 
+library(bsicons)
+library(plotly)
+library(echarts4r)
+library(DT)
+library(reactable)
+library(reactablefmtr)
+library(tidyverse)
+library(utils)
+library(htmltools)
+library(htmlwidgets)
+library(sparkline)
+
+# sources list
+source("R/showcase.R")
+```
+
+<!-- page -->
+
+```{r child="1_overview.qmd"}
+```
+
+```{r child="2_initial_margin.qmd"}
+```
+
+```{r child="3_default_fund.qmd"} -->
+```
+
+```{r child="4_variation_margin.qmd"}
+```
+
+```{r child="About.qmd"}
+```

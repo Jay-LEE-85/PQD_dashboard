@@ -1,0 +1,28 @@
+/*-- scss:rules --*/
+
+.quarto-dashboard #quarto-dashboard-header .navbar .navbar-title a {
+    font-weight: bold;
+}
+
+/* .quarto-dashboard .card-header .card-title { 
+    font-weight: bold;
+} */
+
+.jqstooltip {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  width: 100px;
+  box-sizing: content-box;
+}
+
+.callout.callout-style-default>div.callout-header {
+    flex-direction: row;
+}
+
+.callout.callout-style-default div.callout-icon-container {
+    flex: 0 0 auto;
+}
+
+.quarto-dashboard .card .card-toolbar .shiny-input-container {
+    flex-direction: row;
+}

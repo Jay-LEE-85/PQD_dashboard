@@ -1,0 +1,121 @@
+# Initial Margin {orientation="rows" scrolling="false"}
+
+## sidebar {.sidebar}
+
+## body
+
+### card {height=40%}
+
+#### card_1 {width=40%}
+
+```{r}
+card(
+  card_header(
+    "Card header",
+    bslib::tooltip(
+      bsicons::bs_icon("info-circle"),
+      "Tooltip message"
+    )
+  ),  
+  echarts4r::echarts4rOutput("lineplot2")
+)
+```
+
+#### card_2 {width=60%}
+
+```{r}
+#| label: embed-test
+reactable::reactableOutput('rreact_table')
+```
+
+### reacktable {height=60%}
+
+```{mermaid}
+%%| fig-cap: Mermaid diagram
+%%| fig-align: center
+gantt
+    title A Gantt Diagram
+    dateFormat YYYY-MM-DD
+    section Section
+        A task          :a1, 2014-01-01, 30d
+        Another task    :after a1, 20d
+    section Another
+        Task in Another :2014-01-12, 12d
+        another task    :24d
+
+```
+
+<!-- server -->
+
+``` {r}
+#| context: server
+
+# echart: line plot
+output$lineplot2 <- renderEcharts4r({
+  df <- data.frame(
+    x = seq(50),
+    y = rnorm(50, 10, 3),
+    z = rnorm(50, 11, 2),
+    w = rnorm(50, 9, 2)
+  )
+  df |> 
+    e_charts(x) |> 
+    e_line(z) |> 
+    e_area(w) |> 
+    e_tooltip(trigger = "axis") |>
+    e_legend(top = 0)
+})
+
+# reactable with formatterbal
+output$rreact_table <- renderReactable({
+data <- MASS::Cars93[1:30, c('Type','Make','Model','MPG.city','MPG.highway')]
+
+averages <- data %>%
+  group_by(Type) %>%
+  summarize(
+    MPG.city = mean(MPG.city),
+    MPG.highway = mean(MPG.highway)
+  )
+
+reactable(
+  averages,
+  theme = clean(centered = TRUE),
+  defaultSorted = "Type",
+  columns = list(
+    Type = colDef(maxWidth = 250),
+    MPG.city = colDef(
+      # maxWidth = 200, 
+      style = color_scales(
+        data = data, 
+        colors = viridis::mako(5)), 
+      format = colFormat(digits = 1)),
+    MPG.highway = colDef(
+      # maxWidth = 200, 
+      cell = data_bars(
+        data = data, 
+        fill_color = viridis::mako(5), 
+        number_fmt = scales::comma))
+    ),
+  onClick = "expand",
+  details = function(index) {
+    data_sub <- data[data$Type == averages$Type[index], ]
+    reactable(
+      data_sub,
+      theme = clean(centered = TRUE),
+      columns = list(
+        Type = colDef(show = FALSE),
+        Make = colDef(maxWidth = 175),
+        Model = colDef(maxWidth = 120),
+        MPG.city = colDef(
+          # maxWidth = 200, 
+          style = color_scales(data, viridis::mako(5)), 
+          format = colFormat(digits = 1)),
+        MPG.highway = colDef(
+          # maxWidth = 200, 
+          cell = data_bars(data, fill_color = viridis::mako(5), number_fmt = scales::comma))
+        )
+    ) 
+  }
+)
+})
+```

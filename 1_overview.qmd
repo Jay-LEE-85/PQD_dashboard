@@ -1,0 +1,253 @@
+# Overview {orientation="rows" scrolling="false"}
+
+## sidebar {.sidebar}
+
+```{r}
+# Date
+dateInput("id_date", 
+  label = h5(bsicons::bs_icon("calendar3"), "Date"), 
+  value = "2014-01-01")
+p("You can choice a specific Date")
+
+# sliderinput
+sliderInput("slider1", 
+  label = h5( bsicons::bs_icon("sliders2"), "Slider"), 
+  min = 0, max = 100, value = 50)
+p("You can choice a specific Number")
+
+# radio button
+radioButtons("id_market", 
+  label = h5( bsicons::bs_icon("check2-circle"), "Maket"),
+  choices = list(
+    "Listed Market" = 1,
+    "Derivatives Market" = 2,
+    "OTC Clearing" = 3),
+  selected = 1)
+
+# radio button
+radioButtons("id_risk_factor", 
+  label = h5( bsicons::bs_icon("check2-circle"), "Risk Factor"),
+  choices = list(
+    "Credit Risk(CST)" = 1,
+    "Liquidity Risk(LST)" = 2,
+    "Market Risk(IM)" = 3),
+  selected = 1)
+
+# select input
+selectizeInput("id_select",
+  label = h5( bsicons::bs_icon("person-circle"), "Member"),
+  choices = c("All", "LCH", "ECAG", "CME", "KRX"))
+```
+
+--------------------------------------------------
+
+::: {.callout-note collapse="true"}
+## Disclaimer
+Copyright © 2023 CCP Global - The Global Association of Central 
+Counterparties. All rights reserved.
+[See Details...](../#about)
+:::
+
+
+## body
+
+### value box
+
+```{r}
+value_box(
+  title = "Initial Margin Status",
+  value = textOutput('test'),
+  p("ALL CCP"),
+  showcase = fun_showcase_sparkline,
+  full_screen = TRUE,
+  theme = "success"
+)
+```
+
+```{r}
+value_box(
+  title = "Initial Margin Status",
+  value = "123",
+  showcase = bs_icon("bar-chart"),
+  theme = "primary",
+  p("Europe area")
+)
+```
+
+```{r}
+value_box(
+  title = "Initial Margin Statuse",
+  value = "456",
+  showcase = bs_icon("graph-up"),
+  theme = "info",
+  p("Asia and Medle East area")
+)
+```
+
+```{r}
+value_box(
+  title = "Initial Margin Status",
+  value = "789",
+  showcase = bs_icon("pie-chart"),
+  theme = "secondary",
+  p("America area")
+)
+```
+
+### plot
+
+```{r}
+#| title: Line and Area charts
+echarts4r::echarts4rOutput("lineplot")
+p("This is a line plot drawing by 'echarts'")
+```
+
+```{r}
+#| title: Bar and Step charts
+echarts4r::echarts4rOutput("barplot")
+p("This is a bar plot drawing by 'echarts'")
+```
+
+```{r}
+#| title: Donut chart
+echarts4r::echarts4rOutput("donutplot")
+p("This is a donut plot drawing by 'echarts'")
+```
+
+#### plot: row
+
+```{r}
+#| title: Scatter chart
+echarts4r::echarts4rOutput("scatterplot")
+```
+
+::: {.callout-tip}
+## Tip with Title
+This is an example of a callout with a title.
+:::
+
+### table
+
+```{r}
+#| title: Table of DT
+DT::DTOutput("dt_table_1")
+```
+
+```{r}
+#| title: Table with sparkline
+DT::DTOutput("dt_table_2")
+```
+
+<!-- server -->
+
+```{r}
+#| context: server
+
+# renderinfo: text
+output$test <- renderText({input$slider1})
+
+# echart: line plot
+output$lineplot <- renderEcharts4r({
+  df <- data.frame(
+    x = seq(50),
+    y = rnorm(50, 10, 3),
+    z = rnorm(50, 11, 2),
+    w = rnorm(50, 9, 2)
+  )
+  df |> 
+    e_charts(x) |> 
+    e_line(z) |> 
+    e_area(w) |> 
+    e_tooltip(trigger = "axis") |>
+    e_legend(top = 0)
+})
+
+# echart: barplot
+output$barplot <- renderEcharts4r({
+  df <- data.frame(
+    x = seq(50),
+    y = rnorm(50, 10, 3),
+    z = rnorm(50, 11, 2),
+    w = rnorm(50, 9, 2)
+  )
+  df |> 
+    e_charts(x) |> 
+    e_bar(y, name = "Serie 1") |> 
+    e_step(z, name = "Serie 2") |> 
+    e_tooltip(trigger = "axis") |>
+    e_legend(top = 0)
+})
+
+# echart: donut
+output$donutplot <- renderEcharts4r({
+  mtcars |> 
+    head() |> 
+    tibble::rownames_to_column("model") |> 
+    e_charts(model) |> 
+    e_pie(carb, radius = c("50%", "70%")) |> 
+    e_tooltip(trigger = "item") |>
+    e_legend(top = 0)
+})
+
+# echart: scatter
+output$scatterplot <- renderEcharts4r({
+  df <- data.frame(
+    x = seq(50),
+    y = rnorm(50, 10, 3),
+    z = rnorm(50, 11, 2),
+    w = rnorm(50, 9, 2)
+  )
+  df |> 
+    e_charts(x) |> 
+    e_scatter(y, z) |> 
+    e_visual_map(z, scale = e_scale) |> # scale color
+    e_tooltip(trigger = "axis") |>
+    e_legend(FALSE) # hide legend
+})
+
+# DT: selective table
+df1 <- reactive({
+  iris
+})
+output$dt_table_1 <- renderDT({
+  datatable(
+    df1(),
+    rownames = FALSE,
+    selection = "multi", # none / single / multi
+    options = list(
+      autoWidth  = FALSE,
+      pageLength = 30,
+      lengthChange = FALSE,
+      searching  = FALSE,
+      #' 테이블 data의 폰트사이즈 변경
+      initComplete = htmlwidgets::JS( 
+        "function(settings, json) {",
+        "$(this.api().table().container()).css({'font-size': '85%'});",
+        "}"
+      )
+    )
+  )
+})
+
+# DT: table with sparkline
+df2 <- iris %>%
+  group_by(Species) %>%
+  summarise(Median = median(Sepal.Length), IQR = IQR(Sepal.Length))
+
+df2$Sparkline <- iris$Sepal.Length %>%
+  split(iris$Species) %>%
+  map(~ sparkline(.x, type = "box")) %>%
+  map(htmltools::as.tags) %>%
+  map_chr(as.character)
+
+output$dt_table_2 <- DT::renderDT({
+  datatable(df2, 
+    escape = FALSE, 
+    options = list(
+      fnDrawCallback = htmlwidgets::JS(
+        'function(){debugger;HTMLWidgets.staticRender();}'
+      )
+    )
+  ) %>% spk_add_deps()
+})
+```
