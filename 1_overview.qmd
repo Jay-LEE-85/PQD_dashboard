@@ -5,19 +5,19 @@
 ```{r}
 # Date
 dateInput("id_date", 
-  label = h5(bsicons::bs_icon("calendar3"), "Date"), 
+  label = h3(bsicons::bs_icon("calendar3"), "Date"), 
   value = "2014-01-01")
 p("You can choice a specific Date")
 
 # sliderinput
 sliderInput("slider1", 
-  label = h5( bsicons::bs_icon("sliders2"), "Slider"), 
+  label = h3( bsicons::bs_icon("sliders2"), "Slider"), 
   min = 0, max = 100, value = 50)
 p("You can choice a specific Number")
 
 # radio button
 radioButtons("id_market", 
-  label = h5( bsicons::bs_icon("check2-circle"), "Maket"),
+  label = h3( bsicons::bs_icon("check2-circle"), "Maket"),
   choices = list(
     "Listed Market" = 1,
     "Derivatives Market" = 2,
@@ -26,7 +26,7 @@ radioButtons("id_market",
 
 # radio button
 radioButtons("id_risk_factor", 
-  label = h5( bsicons::bs_icon("check2-circle"), "Risk Factor"),
+  label = h3( bsicons::bs_icon("check2-circle"), "Risk Factor"),
   choices = list(
     "Credit Risk(CST)" = 1,
     "Liquidity Risk(LST)" = 2,
@@ -35,7 +35,7 @@ radioButtons("id_risk_factor",
 
 # select input
 selectizeInput("id_select",
-  label = h5( bsicons::bs_icon("person-circle"), "Member"),
+  label = h3( bsicons::bs_icon("person-circle"), "Member"),
   choices = c("All", "LCH", "ECAG", "CME", "KRX"))
 ```
 
@@ -53,6 +53,19 @@ Counterparties. All rights reserved.
 
 ### value box
 
+#### value box: main {.tabset width=50%}
+
+##### tabset1
+```{r}
+echarts4r::echarts4rOutput("sunburstplot")
+```
+
+##### tabset2
+![](images/sample_1.png)
+
+#### vaule box: sub1 {width=25%}
+
+##### sub1
 ```{r}
 value_box(
   title = "Initial Margin Status",
@@ -63,7 +76,6 @@ value_box(
   theme = "success"
 )
 ```
-
 ```{r}
 value_box(
   title = "Initial Margin Status",
@@ -74,6 +86,9 @@ value_box(
 )
 ```
 
+#### vaule box: sub2 {width=25%}
+
+##### sub2
 ```{r}
 value_box(
   title = "Initial Margin Statuse",
@@ -83,7 +98,6 @@ value_box(
   p("Asia and Medle East area")
 )
 ```
-
 ```{r}
 value_box(
   title = "Initial Margin Status",
@@ -98,6 +112,7 @@ value_box(
 
 ```{r}
 #| title: Line and Area charts
+#| expandable: true
 echarts4r::echarts4rOutput("lineplot")
 p("This is a line plot drawing by 'echarts'")
 ```
@@ -114,7 +129,7 @@ echarts4r::echarts4rOutput("donutplot")
 p("This is a donut plot drawing by 'echarts'")
 ```
 
-#### plot: row
+#### plot: sub1
 
 ```{r}
 #| title: Scatter chart
@@ -145,6 +160,22 @@ DT::DTOutput("dt_table_2")
 
 # renderinfo: text
 output$test <- renderText({input$slider1})
+
+# echart: subburst plot
+
+output$sunburstplot <- renderEcharts4r({
+  df <- data.frame(
+  parents = c("","earth", "earth", "mars", "mars", "land", "land", "ocean", "ocean", "fish", "fish", "Everything", "Everything", "Everything"),
+  labels = c("Everything", "land", "ocean", "valley", "crater", "forest", "river", "kelp", "fish", "shark", "tuna", "venus","earth", "mars"),
+  value = c(0, 30, 40, 10, 10, 20, 10, 20, 20, 8, 12, 10, 70, 20)
+)
+
+universe <- data.tree::FromDataFrameNetwork(df)
+
+universe |> 
+  e_charts() |> 
+  e_sunburst()
+})
 
 # echart: line plot
 output$lineplot <- renderEcharts4r({

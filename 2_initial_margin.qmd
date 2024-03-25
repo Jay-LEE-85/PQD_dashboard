@@ -2,6 +2,10 @@
 
 ## sidebar {.sidebar}
 
+| Date | CCP | Value |
+|------|-----|-------|
+| 2020|KRX|20426546|
+
 ## body
 
 ### card {height=40%}

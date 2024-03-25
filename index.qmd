@@ -9,10 +9,12 @@ format:
       - icon: linkedin
         href: https://nl.linkedin.com/company/ccp-global-12
     logo: images/logo_ccpg.png
+    expandable: false
     theme: 
       - yeti
       - style/style.css
     mermaid-format: svg
+    default-image-extension: svg
 server: shiny
 ---
 
@@ -22,7 +24,7 @@ server: shiny
 #| context: setup
 #| echo: false
 
-# lubrary list 
+# library list 
 library(shiny)
 library(bslib) 
 library(bsicons)
@@ -49,7 +51,7 @@ source("R/showcase.R")
 ```{r child="2_initial_margin.qmd"}
 ```
 
-```{r child="3_default_fund.qmd"} -->
+```{r child="3_default_fund.qmd"}
 ```
 
 ```{r child="4_variation_margin.qmd"}

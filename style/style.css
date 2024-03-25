@@ -8,11 +8,15 @@
     font-weight: bold;
 } */
 
+h3, h4, h5, h6, body {
+    font-size: 75%;
+}
+
 .jqstooltip {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  width: 100px;
-  box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    width: 100px;
+    box-sizing: content-box;
 }
 
 .callout.callout-style-default>div.callout-header {

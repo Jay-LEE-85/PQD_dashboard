@@ -1,6 +1,6 @@
 # About {orientation="rows" scrolling="false"}
 
-## About {height=30%}
+## About {height=20%}
 
 ::: {.card title="About"}
 The CCP Global PQD Quarterly Trends Report provides an overview of the risk management provided by
@@ -18,8 +18,7 @@ template, carrying information stipulated in global regulatory guidance. Further
 CCPs can be found in links provided on the [CCP Global website](https://ccp-global.org) and page 23 of this report.
 :::
 
-## Disclaimer {height=20%}
-
+## Disclaimer {height=15%}
 ::: {.card title="Disclaimer"}
 The information and analysis detailed throughout this PQD QTR are for general information 
 purposes only. While we attempt to keep the information up-to-date and accurate, there are no 
@@ -32,7 +31,7 @@ accepts no liability for any loss arising from any action taken as a result of a
 within this report.
 :::
 
-## Etc {height=50%}
+## Etc {height=65%}
 
 ```{r}
 htmlOutput("frame_test")
