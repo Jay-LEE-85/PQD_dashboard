@@ -8,8 +8,12 @@
     font-weight: bold;
 } */
 
-h3, h4, h5, h6, body {
-    font-size: 75%;
+h3 {
+    font-size: 98%;
+}
+
+h4, h5, h6, body, span {
+    font-size: 85%;
 }
 
 .jqstooltip {
@@ -29,4 +33,8 @@ h3, h4, h5, h6, body {
 
 .quarto-dashboard .card .card-toolbar .shiny-input-container {
     flex-direction: row;
+}
+
+.bslib-value-box.showcase-left-center:not([data-fill-screen="true"]) .value-box-grid .value-box-area {
+    margin-block: initial;
 }
